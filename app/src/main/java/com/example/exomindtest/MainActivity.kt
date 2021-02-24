@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.exomindtest.model.UserItem
+import com.example.exomindtest.retrofit.UserItemNetworkEntity
 import com.example.exomindtest.ui.MainStateEvent
 import com.example.exomindtest.ui.MainViewModel
 import com.example.exomindtest.ui.adapter.MainAdapter
@@ -29,9 +30,13 @@ class MainActivity : AppCompatActivity() {
 
 
         viewModel.setStateEvent(MainStateEvent.GetUserItemEvent)
-        //viewModel.setStateEvent(MainStateEvent.GetAlbumItemEvent)
         setupUI()
         subscribeObservers()
+        viewModel.setStateEvent(MainStateEvent.GetAlbumItemEvent)
+
+        searchBtn.setOnClickListener{
+            Toast.makeText(this, "work in progress", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun setupUI() {
@@ -51,7 +56,6 @@ class MainActivity : AppCompatActivity() {
             when(dataState){
                 is DataState.Success<List<UserItem>> -> {
                     displayProgressBar(false)
-                    Toast.makeText(this, "success", Toast.LENGTH_SHORT).show()
                     recyclerView.visibility = View.VISIBLE
                     displayProgressBar(false)
                     dataState.data?.let { users -> retrieveList(users) }
@@ -59,7 +63,6 @@ class MainActivity : AppCompatActivity() {
                 is DataState.Error -> {
                     displayProgressBar(false)
                     recyclerView.visibility = View.VISIBLE
-                    Toast.makeText(this, "error", Toast.LENGTH_SHORT).show()
                 }
                 is DataState.Loading -> {
                     displayProgressBar(true)

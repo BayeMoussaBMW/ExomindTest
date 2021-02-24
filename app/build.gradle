@@ -76,6 +76,14 @@ dependencies {
     kapt "android.arch.lifecycle:compiler:1.1.1"
 
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
+
+
+    // For Robolectric tests.
+    testImplementation "com.google.dagger:hilt-android-testing:$hilt_version"
+    kaptTest "com.google.dagger:hilt-android-compiler:$hilt_version"
+    androidTestImplementation "com.google.dagger:hilt-android-testing:$hilt_version"
+    kaptAndroidTest "com.google.dagger:hilt-android-compiler:$hilt_version"
+    //androidTestImplementation "androidx.test:core:core-ktx:$kotlin_version"
 }
 
 kapt {

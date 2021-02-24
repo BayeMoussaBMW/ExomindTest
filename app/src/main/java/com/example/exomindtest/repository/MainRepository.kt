@@ -4,6 +4,7 @@ import com.example.exomindtest.model.AlbumItem
 import com.example.exomindtest.model.UserItem
 import com.example.exomindtest.retrofit.ExomindRetrofit
 import com.example.exomindtest.retrofit.NetworkMapper
+import com.example.exomindtest.retrofit.UserItemNetworkEntity
 import com.example.exomindtest.room.CacheMapper
 import com.example.exomindtest.room.UserItemDao
 import com.example.exomindtest.util.DataState
@@ -44,6 +45,19 @@ constructor(
         }catch (e: Exception){
             print(e)
         }
+    }
+
+
+    suspend fun searchUser(s: String): Flow<DataState<UserItem>> = flow {
+        emit(DataState.Loading)
+        delay(1000)
+        try {
+        val result = blogRetrofit.getUserSearch(s)
+        print(result)
+        }catch (e: Exception){
+            print(e)
+        }
+
     }
 
 }
