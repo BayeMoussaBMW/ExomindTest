@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.exomindtest.R
 import com.example.exomindtest.model.UserItem
+import com.example.exomindtest.util.DataState
 import com.example.exomindtest.util.Resource
 import kotlinx.android.synthetic.main.item_layout.view.*
 
@@ -33,9 +34,10 @@ class MainAdapter(private val users: ArrayList<UserItem>) : RecyclerView.Adapter
         holder.bind(users[position])
     }
 
-    fun addUser(users: Resource<List<UserItem>>) {
+    fun addUsers(users: List<UserItem>) {
         this.users.apply {
-            users.data?.let { addAll(it) }
+            clear()
+            addAll(users)
         }
 
     }
