@@ -2,6 +2,7 @@ package com.example.exomindtest.di
 
 import com.example.exomindtest.retrofit.ExomindRetrofit
 import com.example.exomindtest.retrofit.UserItemNetworkEntity
+import com.example.exomindtest.util.BASE_URL
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -25,31 +26,16 @@ object RetrofitModule {
             .create()
     }
 
-   /* @Singleton
-    @Provides
-    fun provideRetrofit(gson:  Gson): Retrofit.Builder {
-        return Retrofit.Builder()
-            .baseUrl("https://jsonplaceholder.typicode.com/")
-            .addConverterFactory(GsonConverterFactory.create(gson))
-    }*/
-
     @Singleton
     @Provides
     fun provideRetrofit(): ExomindRetrofit {
         return Retrofit.Builder()
-            .baseUrl("https://jsonplaceholder.typicode.com/")
+            .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
             .build()
             .create(ExomindRetrofit::class.java)
     }
 
-   /* @Singleton
-    @Provides
-    fun provideBlogService(retrofit: Retrofit.Builder): ExomindRetrofit {
-        return retrofit
-            .build()
-            .create(ExomindRetrofit::class.java)
-    }*/
 
 }
 

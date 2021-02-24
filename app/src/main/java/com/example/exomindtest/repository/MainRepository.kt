@@ -1,5 +1,6 @@
 package com.example.exomindtest.repository
 
+import com.example.exomindtest.model.AlbumItem
 import com.example.exomindtest.model.UserItem
 import com.example.exomindtest.retrofit.ExomindRetrofit
 import com.example.exomindtest.retrofit.NetworkMapper
@@ -31,6 +32,17 @@ constructor(
             emit(DataState.Success(cacheMapper.mapFromEntityList(cachedUsers)))
         } catch (e: Exception) {
             emit(DataState.Error(e))
+        }
+    }
+
+    suspend fun getAlbum(): Flow<DataState<AlbumItem>> = flow {
+        emit(DataState.Loading)
+        delay(1000)
+        try {
+            val networkAlbumItem = blogRetrofit.getAlbum()
+            print(networkAlbumItem)
+        }catch (e: Exception){
+            print(e)
         }
     }
 

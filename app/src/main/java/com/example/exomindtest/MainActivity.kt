@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
 
         subscribeObservers()
         viewModel.setStateEvent(MainStateEvent.GetUserItemEvent)
+        //viewModel.setStateEvent(MainStateEvent.GetAlbumItemEvent)
     }
 
 
@@ -50,13 +51,13 @@ class MainActivity : AppCompatActivity() {
         if(message != null) text.text = message else text.text = "Unknown error."
     }
 
+
     private fun appendBlogTitles(users: List<UserItem>){
         val sb = StringBuilder()
         for(user in users){
             sb.append(user.name + "\n")
-            sb.append(user.username + "\n")
+            //sb.append(user.username + "\n")
             sb.append(user.email + "\n")
-            sb.append(user.address.street + "\n")
         }
         text.text = sb.toString()
     }

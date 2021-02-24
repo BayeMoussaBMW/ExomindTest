@@ -37,6 +37,9 @@ constructor(
                         }
                         .launchIn(viewModelScope)
                 }
+                is MainStateEvent.GetAlbumItemEvent -> {
+                    mainRepository.getAlbum()
+                }
 
                 MainStateEvent.None -> {
                     // who cares
@@ -51,6 +54,6 @@ constructor(
 sealed class MainStateEvent{
 
     object GetUserItemEvent: MainStateEvent()
-
+    object GetAlbumItemEvent: MainStateEvent()
     object None: MainStateEvent()
 }
