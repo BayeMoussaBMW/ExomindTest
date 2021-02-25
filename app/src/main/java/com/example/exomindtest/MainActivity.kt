@@ -1,5 +1,6 @@
 package com.example.exomindtest
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.exomindtest.model.UserItem
 import com.example.exomindtest.retrofit.UserItemNetworkEntity
+import com.example.exomindtest.ui.ListResultFragment
 import com.example.exomindtest.ui.MainStateEvent
 import com.example.exomindtest.ui.MainViewModel
 import com.example.exomindtest.ui.adapter.MainAdapter
@@ -37,6 +39,18 @@ class MainActivity : AppCompatActivity() {
         searchBtn.setOnClickListener{
             Toast.makeText(this, "work in progress", Toast.LENGTH_SHORT).show()
         }
+
+        if (searchBtn != null) {
+            searchBtn.setOnClickListener(View.OnClickListener {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.container, ListResultFragment.newInstance())
+                    .commit()
+                viewModel.setStateEvent(MainStateEvent.GetUserItemSearchEvent)
+                recyclerView.visibility = View.INVISIBLE
+                Toast.makeText(this, "work in progress", Toast.LENGTH_SHORT).show()
+            })
+        }
+
     }
 
     private fun setupUI() {
@@ -88,5 +102,7 @@ class MainActivity : AppCompatActivity() {
         progress_bar.visibility = if(isDisplayed) View.VISIBLE else View.GONE
     }
 
-
+    override fun onBackPressed() {
+        startActivity(Intent(this@MainActivity, MainActivity::class.java))
+    }
 }

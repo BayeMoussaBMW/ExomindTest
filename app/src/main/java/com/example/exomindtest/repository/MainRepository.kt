@@ -6,6 +6,7 @@ import com.example.exomindtest.retrofit.ExomindRetrofit
 import com.example.exomindtest.retrofit.NetworkMapper
 import com.example.exomindtest.retrofit.UserItemNetworkEntity
 import com.example.exomindtest.room.CacheMapper
+import com.example.exomindtest.room.UserItemCacheEntity
 import com.example.exomindtest.room.UserItemDao
 import com.example.exomindtest.util.DataState
 import kotlinx.coroutines.delay
@@ -48,12 +49,18 @@ constructor(
     }
 
 
-    suspend fun searchUser(s: String): Flow<DataState<UserItem>> = flow {
+    suspend fun searchUser(s: String): Flow<DataState<List<UserItem>>> = flow {
         emit(DataState.Loading)
         delay(1000)
         try {
-        val result = blogRetrofit.getUserSearch(s)
-        print(result)
+            val resultsFromNetwork = blogRetrofit.getUserSearch(s)
+            print(resultsFromNetwork)
+            val results = networkMapper.mapFromEntityList(resultsFromNetwork)
+            for (result in results){
+                userItemDao.insert(cacheMapper.mapToEntity(result))
+            }
+            val cachedUsers = userItemDao.get()
+            emit(DataState.Success(cacheMapper.mapFromEntityList(cachedUsers)))
         }catch (e: Exception){
             print(e)
         }

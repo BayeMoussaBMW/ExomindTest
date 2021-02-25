@@ -40,6 +40,9 @@ constructor(
                 is MainStateEvent.GetAlbumItemEvent -> {
                     mainRepository.getAlbum()
                 }
+                is MainStateEvent.GetUserItemSearchEvent -> {
+                    mainRepository.searchUser("Bret").launchIn(this)
+                }
 
                 MainStateEvent.None -> {
                     // who cares
@@ -55,5 +58,6 @@ sealed class MainStateEvent{
 
     object GetUserItemEvent: MainStateEvent()
     object GetAlbumItemEvent: MainStateEvent()
+    object GetUserItemSearchEvent: MainStateEvent()
     object None: MainStateEvent()
 }
